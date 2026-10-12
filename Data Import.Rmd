@@ -59,3 +59,28 @@ litters_df=read_csv("./data/FAS_litters.csv", na=c("", "NA",".", 999))
 ```
 This makes all missing values being seen as na instead of combination of something
 
+
+
+#Other File Formats
+
+Read in an Excel File
+
+```{r}
+library(readxl)
+mlb_df = read_excel("./data/mlb11.xlsx")
+mlb_df
+```
+Can restrict range that cells are read
+```{r}
+mlb_df = read_excel("./data/mlb11.xlsx", range = "A1:F7")
+mlb_df
+```
+
+Read in a SAS File 
+
+```{r}
+library(haven)
+pulse_df = read_sas("./data/public_pulse_data.sas7bdat")
+pulse_df
+```
+
