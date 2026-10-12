@@ -386,3 +386,11 @@ litters_readr
     ## #   `Pups survive` <dbl>
 
 Base R is that is more difficult to look at datasets
+
+\#Exporting Data
+
+Export the mlb sub_table
+
+``` r
+write_csv(mlb_df, "./data/mlb_subtable.csv")
+```
