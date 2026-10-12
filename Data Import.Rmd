@@ -1,21 +1,30 @@
 ---
-title: "Simple document"
-output: html_document
+title: "Data Import"
+output: github_document
 ---
 
-I'm an R Markdown document! 
-
-# Section 1
-
-Here's a **code chunk** that samples from 
-a _normal distribution_:
-
-```{r}
-samp = rnorm(100)
-length(samp)
+```{r, setup}
+library(tidyverse)
 ```
 
-# Section 2
+#Read in some data
+-open data csv doesn't work, is not reproducible 
 
-I can take the mean of the sample, too!
-The mean is `r mean(samp)`.
+#absolute directions
+-using go along path on your own computer, not reproducible 
+#realitve path
+-backwards one step
+-starting point getting directions from this path 
+-benefit of doing R projects and construct relative paths for Rproject, R project is our starting point
+-reproducible
+
+Read in the litters dataset. Study on fecal alcohol syndrome using mice. 
+```{r}
+litters_df = read_csv("./data/FAS_litters.csv")
+litters_df = janitor::clean_names(litters_df)
+```
+No need to load whole janitor package so just load one function from it 
+Don't use dollar signs when creating a folder 
+
+
+#Take a look at the data
