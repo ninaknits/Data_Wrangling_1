@@ -28,3 +28,34 @@ Don't use dollar signs when creating a folder
 
 
 #Take a look at the data
+Printing in the console
+
+```{r}
+litters_df
+```
+```{r}
+head(litters_df)
+```
+First 6 rows 
+
+```{r}
+tail(litters_df)
+```
+Last few rows
+
+```{r}
+skimr::skim(litters_df)
+```
+Some summary data
+
+#Options to read_csv
+```{r}
+litters_df=read_csv("./data/FAS_litters.csv", skip=10, col_names=FALSE)
+```
+Useful if first row is blank or a description of the data set
+
+```{r}
+litters_df=read_csv("./data/FAS_litters.csv", na=c("", "NA",".", 999))
+```
+This makes all missing values being seen as na instead of combination of something
+
