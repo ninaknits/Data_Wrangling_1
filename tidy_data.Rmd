@@ -7,7 +7,40 @@ output: github_document
 library(tidyverse)
 ```
 
-```{r}
+##pivot_long
 
+Load PULSE data
+
+```{r}
+pulse_data = 
+  haven::read_sas("./data/public_pulse_data.sas7bdat") |> 
+  janitor::clean_names ()
 ```
 
+Wide format to long format....
+```{r}
+pulse_data_tidy= 
+  pulse_data |> 
+  pivot_longer (
+    bdi_score_bl:bdi_score_12m,
+    names_to = "visit", 
+    names_prefix = "bdi_score",
+    values_to = "bdi"
+  )
+```
+
+Rewrite, combine, and extent (to add a mutate)
+```{r}
+pulse_data_tidy= 
+  pulse_data |> 
+  pivot_longer (
+    bdi_score_bl:bdi_score_12m,
+    names_to = "visit", 
+    names_prefix = "bdi_score",
+    values_to = "bdi"
+  ) |> 
+  relocate(id, visit) |> 
+  mutate(visit = recode(visit, "bl" = "00m"))
+```
+
+Turned a raw dataset into tidy data
