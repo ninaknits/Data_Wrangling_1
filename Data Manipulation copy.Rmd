@@ -100,7 +100,24 @@ Putting this in order is pretty intuitive
 arrange(litters_df, pups_born_alive)
 ```
 
-```{r}
+## %>%
 
+```{r}
+litters_data_raw = read_csv ("./data/FAS_litters.csv",  na = c("NA", ".", ""))
+litters_clean_name = janitor::clean_names(litters_data_raw)
+liters_data_selected = select(litters_clean_name, -pups_survive)
+litters_mutated = mutate(liters_data_selected, wt_gain = gd18_weight - gd0_weight)
+litters_without_missing = drop_na(litters_mutated, gd0_weight)
 ```
+Instead, USE PIPE OPERATOR
+
+```{r}
+litters_df = 
+  read_csv("./data/FAS_litters.csv",  na = c("NA", ".", "")) |> 
+  janitor::clean_names() |> 
+  select (-pups_survive) |> 
+  mutate (wt_gain = gd18_weight - gd0_weight) |> 
+  drop_na(gd0_weight)
+```
+Don't have to repeat your argument 
 
