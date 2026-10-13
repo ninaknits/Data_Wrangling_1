@@ -13,3 +13,39 @@ litters_df = read_csv("./data/FAS_litters.csv")
 litters_df = janitor::clean_names(litters_df)
 ```
 
+## 'Select'
+
+Choose some columns and not others. 
+
+```{r}
+select(litters_df, gd0_weight:gd_of_birth)
+```
+```{r}
+select(litters_df, -litter_number)
+```
+Remaining Columns....
+```{r}
+select(litters_df, GROUP=group, LITTer_NUmBer = litter_number)
+```
+
+```{r}
+rename(litters_df, GROUP=group)
+```
+
+Select Helpers 
+
+```{r}
+select(litters_df, starts_with("gd"))
+```
+If you have a dataset for some key phrases, can select based on these 
+
+
+```{r}
+select(litters_df, litter_number, everything())
+```
+Move litter_number to the gront
+
+```{r}
+relocate(litters_df, litter_number)
+```
+Don't have to say everything in specific relocate
