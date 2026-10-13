@@ -116,3 +116,66 @@ lotr_tidy=
 ```
 
 Not tidy “sex” and either all capital or lowercase
+
+# Joining Datasets
+
+Import the FAS datasets.
+
+``` r
+pups_df = 
+  read_csv(
+    "./data/FAS_pups.csv",
+    skip = 3,
+    na = c("NA", "", ".")) |>
+  janitor::clean_names() |>
+  mutate(
+    sex = 
+      case_match(
+        sex, 
+        1 ~ "male", 
+        2 ~ "female"),
+    sex = as.factor(sex)) 
+```
+
+    ## Rows: 313 Columns: 6
+    ## ── Column specification ────────────────────────────────────────────────────────
+    ## Delimiter: ","
+    ## chr (1): Litter Number
+    ## dbl (5): Sex, PD ears, PD eyes, PD pivot, PD walk
+    ## 
+    ## ℹ Use `spec()` to retrieve the full column specification for this data.
+    ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+
+    ## Warning: There was 1 warning in `mutate()`.
+    ## ℹ In argument: `sex = case_match(sex, 1 ~ "male", 2 ~ "female")`.
+    ## Caused by warning:
+    ## ! `case_match()` was deprecated in dplyr 1.2.0.
+    ## ℹ Please use `recode_values()` instead.
+
+``` r
+litters_df= 
+  read_csv("./data/FAS_litters.csv") |> 
+  janitor::clean_names() |>
+  separate (group, into = c("dose", "day_of_tx", sep=3))
+```
+
+    ## Rows: 49 Columns: 8
+    ## ── Column specification ────────────────────────────────────────────────────────
+    ## Delimiter: ","
+    ## chr (4): Group, Litter Number, GD0 weight, GD18 weight
+    ## dbl (4): GD of Birth, Pups born alive, Pups dead @ birth, Pups survive
+    ## 
+    ## ℹ Use `spec()` to retrieve the full column specification for this data.
+    ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+
+    ## Warning: Expected 3 pieces. Missing pieces filled with `NA` in 49 rows [1, 2, 3, 4, 5,
+    ## 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, ...].
+
+Next up, time to join them!
+
+``` r
+fas_df = 
+  left_join(pups_df, litters_df, by = "litter_number") |> 
+  arrange(litter_number) |> 
+  relocate (litter_number, dose, day_of_tx)
+```
