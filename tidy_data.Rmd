@@ -44,3 +44,24 @@ pulse_data_tidy=
 ```
 
 Turned a raw dataset into tidy data
+
+## 'Pivot_wider'
+
+Make some data!
+
+```{r}
+analysis_result= 
+  tibble (
+    group = c("treatment", "treatment", "placebo", "placebo"), 
+    time = c("pre", "post", "pre", "post"), 
+    mean = c (4,8,3.5,4)
+  )
+
+analysis_result |> 
+  pivot_wider(
+    names_from = "time",
+    values_from = "mean"
+  )
+  
+```
+
