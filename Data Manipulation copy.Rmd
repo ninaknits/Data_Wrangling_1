@@ -9,7 +9,7 @@ library(tidyverse)
 
 ## Load in the FAS Litters Data 
 ```{r}
-litters_df = read_csv("./data/FAS_litters.csv")
+litters_df = read_csv("./data/FAS_litters.csv", na = c("NA", ".", ""))
 litters_df = janitor::clean_names(litters_df)
 ```
 
@@ -60,7 +60,7 @@ filter(litters_df, gd0_weight < 22)
 Filter rows where gestastional weight when mother found out pregnant less than 22
 
 ```{r}
-filters(litters_df, gd_of_birth == 20)
+filter(litters_df, gd_of_birth == 20)
 ```
 two equal signs to ask a question is when gd is 20 not re-assign a variable 
 
@@ -81,4 +81,14 @@ filter(litters_df, group =="Con7")
 filter(litters_df, group %in% c("Con7", "Mod8"))
 ```
 Either con7 or mod8
-Real challege is not using filter but understanding how to implement it using R
+Real challenge is not using filter but understanding how to implement it using R
+
+
+# 'Mutate'
+
+```{r}
+mutate(litters_df, 
+       wt_gain = gd18_weight - gd0_weight, 
+       group = str_to_lower(group))
+```
+
